@@ -17,6 +17,6 @@ React-Native App that simulates a Podcast playlist.
 
 4. Install `json-server` globally with `npm install -g json-server` or `yarn add global json-server`.
 
-5. In root folder, run the fake backend with `json server server.json`.
+5. In root folder, run the fake backend with `json-server server.json`.
 
 6. Emulate with `react-native run-ios` or `react-native run-android`.
