@@ -12,6 +12,7 @@ const { Types, Creators } = createActions({
   pause: null,
   prev: null,
   next: null,
+  reset: null,
 });
 export const PlayerTypes = Types;
 export default Creators;
@@ -40,4 +41,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   // Below: It doesn't wait for Saga.
   // It sets to false at the same time Saga controls the TrackPlayer.
   [Types.PAUSE]: state => state.merge({ playing: false }),
+  //
+  [Types.RESET]: state => state.merge({ podcast: null, current: null, playing: false }),
 });

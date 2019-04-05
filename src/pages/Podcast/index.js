@@ -28,7 +28,6 @@ class Podcast extends Component {
   };
 
   handlePlay = (episodeId) => {
-    console.tron.log('o id do episodio e:', episodeId);
     const { setPodcastReq, navigation } = this.props;
     const podcast = navigation.getParam('podcast');
 

@@ -6,7 +6,7 @@ import { PlayerTypes } from '~/store/ducks/player';
 // CALLBACKS (async)
 import { load as loadPodcasts } from './podcasts';
 import {
-  init as initPlayer, setPodcast, play, pause, prev, next,
+  init as initPlayer, setPodcast, play, pause, prev, next, reset,
 } from './player';
 //
 
@@ -20,5 +20,6 @@ export default function* rootSaga() {
     takeLatest(PlayerTypes.PAUSE, pause),
     takeLatest(PlayerTypes.PREV, prev),
     takeLatest(PlayerTypes.NEXT, next),
+    takeLatest(PlayerTypes.RESET, reset),
   ]);
 }
