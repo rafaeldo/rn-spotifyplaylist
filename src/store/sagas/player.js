@@ -16,7 +16,6 @@ export function* init() {
 export function* setPodcast(action) {
   const currentPodcast = yield select(state => state.player.podcast);
 
-  // IF
   // - There is nothing playing yet;
   // - or The Podcast playing is different from what was requested to play:
   if (!currentPodcast || action.podcast.id !== currentPodcast.id) {
@@ -28,7 +27,6 @@ export function* setPodcast(action) {
     yield put(PlayerActions.setPodcastSuc(action.podcast));
   }
 
-  // IF
   // - Changing the item of the Podcast:
   if (action.episodeId) {
     yield call(TrackPlayer.skip, action.episodeId);
@@ -36,6 +34,15 @@ export function* setPodcast(action) {
     yield put(PlayerActions.setCurrent(action.episodeId));
   }
 
-  // PLAY
+  yield put(PlayerActions.play());
+}
+
+// --- Play
+export function* play() {
   yield call(TrackPlayer.play);
+}
+
+// --- Pause
+export function* pause() {
+  yield call(TrackPlayer.pause);
 }
