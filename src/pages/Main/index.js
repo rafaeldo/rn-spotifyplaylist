@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import PodcastActions from '~/store/ducks/podcasts';
 
 import {
   Container, PodcastList, PageTitle, Podcast, Cover, Info, Title, Count,
 } from './styles';
 
-import podcasts from '~/utils/podcastsArr';
+class Main extends Component {
+  componentDidMount() {
+    const { loadRequest } = this.props;
 
-export default class Main extends Component {
-  componentDidMount() {}
+    loadRequest();
+  }
 
   render() {
+    const { podcasts } = this.props;
     return (
       <Container>
         <PodcastList
           ListHeaderComponent={() => <PageTitle>Podcasts</PageTitle>}
-          data={podcasts}
+          data={podcasts.data}
           keyExtractor={podcast => String(podcast.id)}
           renderItem={({ item: podcast }) => (
             <Podcast onPress={() => {}}>
@@ -30,3 +36,17 @@ export default class Main extends Component {
     );
   }
 }
+
+// MAP STATE and ACTIONS
+const mapStateToProps = state => ({
+  podcasts: state.podcasts,
+});
+
+const mapActionsToProps = dispatch => bindActionCreators(PodcastActions, dispatch);
+//
+
+// EXPORT
+export default connect(
+  mapStateToProps,
+  mapActionsToProps,
+)(Main);

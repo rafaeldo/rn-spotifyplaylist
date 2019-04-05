@@ -9,7 +9,7 @@ const { Types, Creators } = createActions({
   loadSuccess: ['data'],
   loadFailure: null,
 });
-export const PodcastTypes = Types;
+export const PodcastsTypes = Types;
 export default Creators;
 
 /**
