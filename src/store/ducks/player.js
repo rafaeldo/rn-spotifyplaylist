@@ -8,7 +8,7 @@ const { Types, Creators } = createActions({
   setPodcastReq: ['podcast', 'episodeId'],
   setPodcastSuc: ['podcast'],
 });
-export const PodcastsTypes = Types;
+export const PlayerTypes = Types;
 export default Creators;
 
 /**

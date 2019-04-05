@@ -1,12 +1,18 @@
 import { all, takeLatest } from 'redux-saga/effects';
 
 import { PodcastsTypes } from '~/store/ducks/podcasts';
+import { PlayerTypes } from '~/store/ducks/player';
 
 // CALLBACKS (async)
-import { load as LoadPodcasts } from './podcasts';
+import { load as loadPodcasts } from './podcasts';
+import { init as initPlayer, setPodcast } from './player';
 //
 
 // SAGA CONFIG
 export default function* rootSaga() {
-  return yield all([takeLatest(PodcastsTypes.LOAD_REQUEST, LoadPodcasts)]);
+  return yield all([
+    initPlayer(),
+    takeLatest(PodcastsTypes.LOAD_REQUEST, loadPodcasts),
+    takeLatest(PlayerTypes.SET_PODCAST_REQ, setPodcast),
+  ]);
 }
