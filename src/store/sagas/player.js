@@ -1,4 +1,4 @@
-import { call, put } from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 import TrackPlayer from 'react-native-track-player';
 
 import PlayerActions from '~/store/ducks/player';
@@ -14,7 +14,28 @@ export function* init() {
 
 // --- Set Podcast
 export function* setPodcast(action) {
-  yield call(TrackPlayer.add, [...action.podcast.tracks]);
+  const currentPodcast = yield select(state => state.player.podcast);
 
-  yield put(PlayerActions.setPodcastSuc(action.podcast));
+  // IF
+  // - There is nothing playing yet;
+  // - or The Podcast playing is different from what was requested to play:
+  if (!currentPodcast || action.podcast.id !== currentPodcast.id) {
+    yield call(TrackPlayer.stop);
+    yield call(TrackPlayer.reset);
+
+    yield call(TrackPlayer.add, [...action.podcast.tracks]);
+
+    yield put(PlayerActions.setPodcastSuc(action.podcast));
+  }
+
+  // IF
+  // - Changing the item of the Podcast:
+  if (action.episodeId) {
+    yield call(TrackPlayer.skip, action.episodeId);
+
+    yield put(PlayerActions.setCurrent(action.episodeId));
+  }
+
+  // PLAY
+  yield call(TrackPlayer.play);
 }
