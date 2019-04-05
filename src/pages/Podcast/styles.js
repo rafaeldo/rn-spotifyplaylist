@@ -23,6 +23,16 @@ export const Background = styled.ImageBackground`
   opacity: 0.2;
 `;
 
+export const BackButton = styled.TouchableOpacity.attrs({
+  hitSlop: {
+    top: 5, left: 5, right: 5, bottom: 5,
+  },
+})`
+  position: absolute;
+  left: 30px;
+  top: ${getStatusBarHeight() + 30}px;
+`;
+
 export const PodcastTitle = styled.Text`
   font-size: 24px;
   font-weight: bold;
