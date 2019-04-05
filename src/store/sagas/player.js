@@ -1,15 +1,37 @@
-import { call, put, select } from 'redux-saga/effects';
+import {
+  call, put, select, take,
+} from 'redux-saga/effects';
+import { eventChannel } from 'redux-saga';
 import TrackPlayer from 'react-native-track-player';
 
 import PlayerActions from '~/store/ducks/player';
+
+// TRACKPLAYER WATCHER EVENT
+// --- Track Changed
+export function* trackChanged() {
+  const channel = eventChannel((emitter) => {
+    const onTrackChange = TrackPlayer.addEventListener('playback-track-changed', emitter);
+
+    return () => onTrackChange.remove();
+  });
+
+  try {
+    while (true) {
+      const { nextTrack } = yield take(channel);
+
+      yield put(PlayerActions.setCurrent(nextTrack));
+    }
+  } finally {
+    channel.close();
+  }
+}
 
 // SAGAS CALLBACKS
 // --- Init Player
 export function* init() {
   yield call(TrackPlayer.setupPlayer); // Setup the Player
 
-  TrackPlayer.addEventListener('playback-track-changed', console.tron.log);
-  TrackPlayer.addEventListener('playback-state', console.tron.log);
+  TrackPlayer.addEventListener('playback-state', () => ({}));
 }
 
 // --- Set Podcast
@@ -35,6 +57,7 @@ export function* setPodcast(action) {
   }
 
   yield put(PlayerActions.play());
+  yield call(trackChanged);
 }
 
 // --- Play
