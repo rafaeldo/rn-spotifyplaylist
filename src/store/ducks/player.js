@@ -10,6 +10,8 @@ const { Types, Creators } = createActions({
   setCurrent: ['id'],
   play: null,
   pause: null,
+  prev: null,
+  next: null,
 });
 export const PlayerTypes = Types;
 export default Creators;

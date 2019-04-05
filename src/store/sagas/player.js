@@ -46,3 +46,31 @@ export function* play() {
 export function* pause() {
   yield call(TrackPlayer.pause);
 }
+
+// --- Prev
+export function* prev() {
+  const player = yield select(state => state.player);
+  const currentIndex = player.podcast.tracks.findIndex(episode => episode.id === player.current);
+
+  // Checks if there is a previous episode
+  if (player.podcast.tracks[currentIndex - 1]) {
+    yield call(TrackPlayer.skipToPrevious);
+
+    // If the player is paused
+    yield put(PlayerActions.play());
+  }
+}
+
+// --- Next
+export function* next() {
+  const player = yield select(state => state.player);
+  const currentIndex = player.podcast.tracks.findIndex(episode => episode.id === player.current);
+
+  // Checks if there is a next episode
+  if (player.podcast.tracks[currentIndex + 1]) {
+    yield call(TrackPlayer.skipToNext);
+
+    // If the player is paused
+    yield put(PlayerActions.play());
+  }
+}
