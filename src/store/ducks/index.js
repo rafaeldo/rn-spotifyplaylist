@@ -1,12 +1,7 @@
 import { combineReducers } from 'redux';
 
-// FAKE STORE
-// Just to start the project
-function fakeStore() {
-  return {};
-}
-//
+import { reducer as podcasts } from './podcasts';
 
 export default combineReducers({
-  fakeStore,
+  podcasts,
 });
