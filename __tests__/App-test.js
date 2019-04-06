@@ -2,13 +2,14 @@
  * @format
  */
 
-import 'react-native';
 import React from 'react';
-import App from '../App';
+import { shallow } from 'enzyme';
 
-// Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
+import App from '../index';
+import Player from '../src/components/Player';
 
 it('renders correctly', () => {
-  renderer.create(<App />);
+  const wrapper = shallow(<App />);
+
+  expect(wrapper.find(<Player />).exists()).toBe(true);
 });
